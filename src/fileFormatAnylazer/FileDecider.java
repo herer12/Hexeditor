@@ -9,6 +9,7 @@ public class FileDecider {
 
     public FileDecider() {
         formats.add(new PNG());
+        formats.add(new JPG());
     }
 
     public FileFormat decideFileFormat(File file) {

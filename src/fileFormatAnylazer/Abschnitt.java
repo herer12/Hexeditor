@@ -4,7 +4,7 @@ public class Abschnitt {
     private final String name;
     private final int startChunk;
     private final int endChunk;
-    private final byte[] data;
+    private byte[] data;
 
     public Abschnitt(String name, int startChunk, int endChunk, String hex) {
         this.name = name;
@@ -29,6 +29,10 @@ public class Abschnitt {
 
     public byte[] getData() {
         return data;
+    }
+
+    public void addData(byte[] data) {
+        this.data = data;
     }
 
     public static String bytesToHex(byte[] bytes) {
