@@ -130,19 +130,19 @@ public class FileManipulation {
                 }
 
                 case Decimal -> {
-                    return Arrays.toString(loadFileDecimal());
+                    return Arrays.toString(loadFileDecimal()).replace("[", "").replace("]", "").replace(",", "");
                 }
 
                 case Octal -> {
-                    return Arrays.toString(loadFileOctal());
+                    return Arrays.toString(loadFileOctal()).replace("[", "").replace("]", "").replace(",", "");
                 }
 
                 case Binary -> {
-                    return Arrays.toString(loadFileBinary());
+                    return Arrays.toString(loadFileBinary()).replace("[", "").replace("]", "").replace(",", "");
                 }
 
                 case Text -> {
-                    return new String(loadFileBytes());
+                    return new String(loadFileBytes()).replace("[", "").replace("]", "").replace(",", "");
                 }
 
             }

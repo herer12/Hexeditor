@@ -16,11 +16,7 @@ public class Abschnitt {
             return;
         }
 
-        char[] chars = hex.toCharArray();
-        data = new byte[chars.length];
-        for (int i = 0; i < chars.length; i++) {
-            data[i] = (byte) chars[i];
-        }
+        data = hexToBytes(hex);
     }
 
     public int getStartChunk() {
@@ -33,5 +29,35 @@ public class Abschnitt {
 
     public byte[] getData() {
         return data;
+    }
+
+    public static String bytesToHex(byte[] bytes) {
+        String[] hex = new String[bytes.length];
+
+        for (int i = 0; i < bytes.length; i++) {
+
+            hex[i] = String.format("%02X", bytes[i] & 0xFF);
+        }
+        return String.join(" ", hex);
+    }
+
+    public static byte[] hexToBytes(String str) {
+        String[] parts = str.trim().split("\\s+");
+        byte[] data = new byte[parts.length];
+
+        for (int i = 0; i < parts.length; i++) {
+            data[i] = (byte) Integer.parseInt(parts[i], 16);
+        }
+        return data;
+    }
+
+    @Override
+    public String toString() {
+        return "Abschnitt{" +
+                "name='" + name + '\'' +
+                ", startChunk=" + startChunk +
+                ", endChunk=" + endChunk +
+                ", data=" + bytesToHex(data) +
+                '}';
     }
 }

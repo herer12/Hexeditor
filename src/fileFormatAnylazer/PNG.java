@@ -29,8 +29,9 @@ public final class PNG extends FileFormat {
 
     @Override
     public boolean isThisFormat(byte[] data) {
-        for (int i = abschnittList.getFirst().getStartChunk(); i <= abschnittList.getFirst().getEndChunk(); i++) {
-            if (data[i] != abschnittList.getFirst().getData()[i]) return false;
+        for (int i = abschnittList.getFirst().getStartChunk(); i < abschnittList.getFirst().getEndChunk(); i++) {
+            byte b = abschnittList.getFirst().getData()[i];
+            if (data[i] != b) return false;
         }
         return true;
 
@@ -38,6 +39,16 @@ public final class PNG extends FileFormat {
 
     @Override
     public List<Abschnitt> analyze(byte[] data) {
-        return null;
+        LinkedList<Abschnitt> abschnittInThisData = new LinkedList<>();
+        for (Abschnitt abschnitt : abschnittList) {
+            if (data.length > abschnitt.getEndChunk()) {
+                boolean isThisAbschnitt = true;
+                for (int i = abschnittList.getFirst().getStartChunk(); i < abschnittList.getFirst().getEndChunk(); i++) {
+                    if (data[i] != abschnittList.getFirst().getData()[i]) isThisAbschnitt = false;
+                }
+                if (isThisAbschnitt) abschnittInThisData.add(abschnitt);
+            }
+        }
+        return abschnittInThisData;
     }
 }
