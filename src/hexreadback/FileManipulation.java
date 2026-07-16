@@ -3,17 +3,27 @@ package hexreadback;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Arrays;
 
 public class FileManipulation {
 
     private final Path filePath;
-    private final OutputClass outputClass;
+    private OutputClass outputClass;
+
+    private FileManipulation() {
+        this.filePath = Path.of("Test");
+        this.outputClass = OutputClass.Text;
+    }
 
     public FileManipulation(Path filePath, OutputClass outputClass) {
         this.filePath = filePath;
         this.outputClass = outputClass;
 
 
+    }
+
+    public void changeOutputClass(OutputClass outputClass) {
+        this.outputClass = outputClass;
     }
 
     /**
@@ -113,22 +123,33 @@ public class FileManipulation {
     public String getFileValue() {
 
         try {
-            return switch (outputClass) {
+            switch (outputClass) {
 
-                case Hexadecimal -> String.join(" ", loadFileHex());
+                case Hexadecimal -> {
+                    return Arrays.toString(loadFileHex()).replace("[", "").replace("]", "").replace(",", "");
+                }
 
-                case Decimal -> String.join(" ", loadFileDecimal());
+                case Decimal -> {
+                    return Arrays.toString(loadFileDecimal());
+                }
 
-                case Octal -> String.join(" ", loadFileOctal());
+                case Octal -> {
+                    return Arrays.toString(loadFileOctal());
+                }
 
-                case Binary -> String.join(" ", loadFileBinary());
+                case Binary -> {
+                    return Arrays.toString(loadFileBinary());
+                }
 
-                case Text -> new String(loadFileBytes());
+                case Text -> {
+                    return new String(loadFileBytes());
+                }
 
-            };
+            }
 
         } catch (IOException e) {
             return "Error reading file: " + e.getMessage();
         }
+        return "";
     }
 }
