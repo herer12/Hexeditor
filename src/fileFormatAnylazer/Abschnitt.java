@@ -1,9 +1,11 @@
 package fileFormatAnylazer;
 
+import java.util.Objects;
+
 public class Abschnitt {
     private final String name;
-    private final int startChunk;
-    private final int endChunk;
+    private int startChunk;
+    private int endChunk;
     private byte[] data;
 
     public Abschnitt(String name, int startChunk, int endChunk, String hex) {
@@ -17,6 +19,29 @@ public class Abschnitt {
         }
 
         data = hexToBytes(hex);
+    }
+
+    public static byte[] hexToBytes(String str) {
+        String[] parts = str.trim().split("\\s+");
+        byte[] data = new byte[parts.length];
+
+        for (int i = 0; i < parts.length; i++) {
+            if (Objects.equals(parts[i], "*")) {
+                data[i] = 0;
+                continue;
+            }
+            data[i] = (byte) Integer.parseInt(parts[i], 16);
+        }
+        return data;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setStartChunk(int startChunk) {
+        this.startChunk = startChunk;
+        setEndChunk(startChunk + data.length);
     }
 
     public int getStartChunk() {
@@ -45,14 +70,8 @@ public class Abschnitt {
         return String.join(" ", hex);
     }
 
-    public static byte[] hexToBytes(String str) {
-        String[] parts = str.trim().split("\\s+");
-        byte[] data = new byte[parts.length];
-
-        for (int i = 0; i < parts.length; i++) {
-            data[i] = (byte) Integer.parseInt(parts[i], 16);
-        }
-        return data;
+    private void setEndChunk(int endChunk) {
+        this.endChunk = endChunk;
     }
 
     @Override

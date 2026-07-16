@@ -8,7 +8,7 @@ import java.nio.file.Path;
 
 public class Main {
     public static void main(String[] args) throws FileNotFoundException {
-        Path path = Path.of("Test2.jpg");
+        Path path = Path.of("Test.png");
         OutputClass outputClass = OutputClass.Hexadecimal;
         FileManipulation fileManipulation = new FileManipulation(path, outputClass);
         String file = fileManipulation.getFileValue();
