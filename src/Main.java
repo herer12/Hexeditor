@@ -17,7 +17,6 @@ public class Main {
         printWriter.close();
         FileDecider fileDecider = new FileDecider();
 
-        System.out.println(fileDecider.decideFileFormat(file));
         System.out.println(fileDecider.getAbschnitte(file));
     }
 
